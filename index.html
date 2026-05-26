@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sesión 11: Tablas y Formularios — IDAT</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            idatYellow: '#FFC820',
+            idatDark: '#111827',
+            idatMuted: '#4B5563',
+            idatLight: '#F3F4F6'
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Transiciones de opacidad para el cambio fluido de diapositivas */
+    .slide-container {
+      perspective: 1000px;
+    }
+    .slide {
+      transition: all 0.4s ease-in-out;
+      opacity: 0;
+      transform: scale(0.99) translateY(4px);
+      display: none;
+    }
+    .slide.active {
+      display: flex;
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+    /* Estilo para las barras de scroll internas */
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #1f2937;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #4b5563;
+      border-radius: 3px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #FFC820;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 text-idatDark font-sans h-screen flex flex-col justify-between overflow-hidden select-none">
+
+  <!-- Header Corporativo Superior (Altura Fija) -->
+  <header class="bg-idatDark text-white px-6 md:px-12 py-3 flex items-center justify-between border-b-4 border-idatYellow shadow-md h-[72px] flex-shrink-0">
+    <div class="flex items-center gap-3">
+      <div class="bg-idatYellow text-idatDark font-black px-3 py-1 rounded text-lg tracking-wider">IDAT</div>
+      <div class="h-6 w-[1px] bg-gray-600 hidden md:block"></div>
+      <div class="hidden md:block">
+        <span class="text-xs text-idatYellow font-bold tracking-widest block uppercase">Desarrollo Web: HTML & CSS</span>
+        <span class="text-sm font-semibold">Sesión 11: Estructuración y Captura de Datos</span>
+      </div>
+    </div>
+    <div class="text-right text-xs md:text-sm font-medium text-gray-300">
+      Docente: <strong class="text-idatYellow">Ing. Jhon Chavez</strong>
+    </div>
+  </header>
+
+  <!-- Área Principal de Diapositivas (Se adapta al espacio vertical restante) -->
+  <main class="flex-1 p-4 md:p-6 overflow-hidden flex items-center justify-center">
+    <div class="w-full max-w-6xl h-full flex items-stretch justify-center slide-container">
+
+      <!-- ============================================== -->
+      <!-- DIAPOSITIVA 1: Portada (Sesión 11 + Docente) -->
+      <!-- ============================================== -->
+      <div id="slide-1" class="slide active w-full bg-white rounded-3xl shadow-xl border border-gray-200 overflow-hidden flex-col md:flex-row h-full">
+        <!-- Panel Izquierdo Amarillo -->
+        <div class="md:w-5/12 bg-idatYellow p-8 md:p-12 flex flex-col justify-between relative overflow-hidden h-full flex-shrink-0">
+          <div class="absolute -right-16 -top-16 w-48 h-48 bg-white/10 rounded-full blur-2xl"></div>
+          <div>
+            <span class="bg-idatDark text-idatYellow font-black px-4 py-1.5 rounded-full text-xs tracking-widest uppercase">SESIÓN 11</span>
+            <h1 class="text-4xl md:text-5xl font-black text-idatDark mt-6 leading-tight">Tablas y Formularios</h1>
+            <p class="text-idatDark/80 font-medium mt-3 text-sm md:text-base">Dominando la estructuración de información y la interacción con el usuario en la web.</p>
+          </div>
+          <div class="border-t border-idatDark/20 pt-6">
+            <span class="text-xs font-bold uppercase tracking-wider text-idatDark/60 block">Facilitador del curso:</span>
+            <span class="text-xl font-extrabold text-idatDark block mt-1">Ing. Jhon Chavez</span>
+            <span class="text-xs font-semibold bg-idatDark/10 text-idatDark px-2 py-0.5 rounded mt-2 inline-block">IDAT © 2026</span>
+          </div>
+        </div>
+        <!-- Panel Derecho de Información -->
+        <div class="md:w-7/12 p-8 md:p-12 flex flex-col justify-center bg-radial-at-tr from-gray-50 to-white h-full overflow-y-auto">
+          <h2 class="text-2xl md:text-3xl font-bold text-idatDark mb-4">¿Qué aprenderemos hoy?</h2>
+          <p class="text-gray-600 mb-8 leading-relaxed text-sm md:text-base">Las tablas nos permiten organizar grandes volúmenes de datos de manera legible, mientras que los formularios representan la puerta de entrada para que el usuario interactúe y envíe información hacia nuestras aplicaciones.</p>
+          <div class="grid grid-cols-2 gap-4">
+            <div class="bg-idatLight p-5 rounded-2xl border border-gray-200 flex flex-col justify-between">
+              <div>
+                <span class="text-3xl mb-2 block">📊</span>
+                <h3 class="font-bold text-sm md:text-base text-idatDark">Tablas de Datos</h3>
+                <p class="text-xs text-idatMuted mt-1">Sintaxis semántica avanzada y estructuración de celdas compleja.</p>
+              </div>
+            </div>
+            <div class="bg-idatLight p-5 rounded-2xl border border-gray-200 flex flex-col justify-between">
+              <div>
+                <span class="text-3xl mb-2 block">📝</span>
+                <h3 class="font-bold text-sm md:text-base text-idatDark">Formularios Interactivos</h3>
+                <p class="text-xs text-idatMuted mt-1">Controles de captura, tipos de inputs y validación de datos.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================== -->
+      <!-- DIAPOSITIVA 2: Agenda de la Presentación -->
+      <!-- ============================================== -->
+      <div id="slide-2" class="slide w-full bg-white rounded-3xl shadow-xl border border-gray-200 p-8 md:p-12 flex-col justify-between h-full">
+        <div class="flex flex-col justify-between h-full">
+          <div>
+            <div class="flex items-center gap-2 mb-3">
+              <span class="bg-idatYellow text-idatDark font-bold px-2.5 py-0.5 rounded text-xs">RUTA DE APRENDIZAJE</span>
+              <h2 class="text-2xl font-black text-idatDark uppercase tracking-tight">Agenda de la Sesión</h2>
+            </div>
+            <p class="text-sm text-idatMuted mb-6">El recorrido técnico estructurado para lograr dominar la semántica de datos y capturas en HTML.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="flex gap-4 p-5 rounded-2xl bg-idatLight border-l-4 border-idatYellow items-start">
+                <span class="font-extrabold text-idatYellow text-2xl leading-none">01</span>
+                <div>
+                  <h3 class="font-bold text-sm md:text-base text-idatDark">Introducción a Tablas Semánticas</h3>
+                  <p class="text-xs text-idatMuted mt-1">Entendiendo &lt;table&gt;, &lt;thead&gt;, &lt;tbody&gt;, &lt;tr&gt;, &lt;th&gt; y &lt;td&gt;.</p>
+                </div>
+              </div>
+              <div class="flex gap-4 p-5 rounded-2xl bg-idatLight border-l-4 border-idatDark items-start">
+                <span class="font-extrabold text-idatDark text-2xl leading-none">02</span>
+                <div>
+                  <h3 class="font-bold text-sm md:text-base text-idatDark">Ejemplos Prácticos de Tablas</h3>
+                  <p class="text-xs text-idatMuted mt-1">Caso 1: Horario de Clases Semanal. Caso 2: Reporte Financiero con Colspan y Rowspan.</p>
+                </div>
+              </div>
+              <div class="flex gap-4 p-5 rounded-2xl bg-idatLight border-l-4 border-idatYellow items-start">
+                <span class="font-extrabold text-idatYellow text-2xl leading-none">03</span>
+                <div>
+                  <h3 class="font-bold text-sm md:text-base text-idatDark">Arquitectura de Formularios</h3>
+                  <p class="text-xs text-idatMuted mt-1">El elemento &lt;form&gt;, &lt;label&gt; y los diversos tipos de &lt;input&gt;.</p>
+                </div>
+              </div>
+              <div class="flex gap-4 p-5 rounded-2xl bg-idatLight border-l-4 border-idatDark items-start">
+                <span class="font-extrabold text-idatDark text-2xl leading-none">04</span>
+                <div>
+                  <h3 class="font-bold text-sm md:text-base text-idatDark">Ejemplos Prácticos de Formularios</h3>
+                  <p class="text-xs text-idatMuted mt-1">Caso 1: Formulario de Registro con validaciones nativas. Caso 2: Encuesta de Feedback de Usuario.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mt-4 pt-4 border-t border-gray-100 flex justify-between items-center text-xs text-idatMuted flex-shrink-0">
+            <span>Tiempo estimado: 2 horas pedagógicas</span>
+            <span class="font-semibold text-idatDark">Práctica Activa 100% interactiva</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================== -->
+      <!-- DIAPOSITIVA 3: Tablas - Fundamentos Teóricos -->
+      <!-- ============================================== -->
+      <div id="slide-3" class="slide w-full bg-white rounded-3xl shadow-xl border border-gray-200 p-8 md:p-12 flex-col justify-between h-full">
+        <div class="flex flex-col justify-between h-full">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <div class="flex items-center gap-2">
+                <span class="bg-idatYellow text-idatDark font-bold px-2.5 py-0.5 rounded text-xs">PARTE 1</span>
+                <h2 class="text-2xl font-black text-idatDark uppercase tracking-tight">Estructuración con Tablas HTML</h2>
+              </div>
+              <span class="text-xs text-idatMuted font-bold uppercase">Semántica de Datos</span>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-stretch mt-4">
+              <div class="md:col-span-5 flex flex-col justify-center pr-2">
+                <p class="text-sm md:text-base text-gray-600 leading-relaxed mb-4">
+                  Las tablas HTML se deben utilizar <strong>únicamente</strong> para representar datos tabulares (filas y columnas). Nunca se deben emplear para maquetar la estructura o rejilla de un sitio web.
+                </p>
+                <ul class="space-y-3.5 text-xs md:text-sm text-idatDark font-medium">
+                  <li class="flex items-start gap-2">
+                    <span class="text-idatYellow text-sm">✔</span>
+                    <span><code>&lt;thead&gt;</code>: Agrupa el contenido del encabezado.</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-idatYellow text-sm">✔</span>
+                    <span><code>&lt;tbody&gt;</code>: Agrupa el cuerpo de la información principal.</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-idatYellow text-sm">✔</span>
+                    <span><code>&lt;tfoot&gt;</code>: Agrupa el pie de tabla (totales, resúmenes).</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-idatYellow text-sm">✔</span>
+                    <span><code>colspan</code> y <code>rowspan</code>: Atributos para expandir columnas y filas.</span>
+                  </li>
+                </ul>
+              </div>
+              <div class="md:col-span-7 bg-idatDark text-gray-100 rounded-2xl p-6 font-mono text-xs md:text-sm overflow-auto custom-scrollbar shadow-inner relative flex flex-col justify-center min-h-[220px]">
+                <div class="absolute right-3 top-3 text-[10px] text-gray-400 bg-gray-800 px-2 py-0.5 rounded font-sans uppercase">Sintaxis Básica</div>
+                <div class="space-y-1">
+                  <pre class="text-yellow-400">&lt;<span class="text-blue-400">table</span> <span class="text-green-400">class</span>="<span class="text-white">w-full</span>"&gt;</pre>
+                  <pre class="text-yellow-400">  &lt;<span class="text-blue-400">thead</span>&gt;</pre>
+                  <pre class="text-yellow-400">    &lt;<span class="text-blue-400">tr</span>&gt;</pre>
+                  <pre class="text-yellow-400">      &lt;<span class="text-blue-400">th</span>&gt;Producto&lt;/<span class="text-blue-400">th</span>&gt; &lt;<span class="text-blue-400">th</span>&gt;Precio&lt;/<span class="text-blue-400">th</span>&gt;</pre>
+                  <pre class="text-yellow-400">    &lt;/<span class="text-blue-400">tr</span>&gt;</pre>
+                  <pre class="text-yellow-400">  &lt;/<span class="text-blue-400">thead</span>&gt;</pre>
+                  <pre class="text-yellow-400">  &lt;<span class="text-blue-400">tbody</span>&gt;</pre>
+                  <pre class="text-yellow-400">    &lt;<span class="text-blue-400">tr</span>&gt;</pre>
+                  <pre class="text-yellow-400">      &lt;<span class="text-blue-400">td</span>&gt;Laptop Core i7&lt;/<span class="text-blue-400">td</span>&gt; &lt;<span class="text-blue-400">td</span>&gt;S/. 2500&lt;/<span class="text-blue-400">td</span>&gt;</pre>
+                  <pre class="text-yellow-400">    &lt;/<span class="text-blue-400">tr</span>&gt;</pre>
+                  <pre class="text-yellow-400">  &lt;/<span class="text-blue-400">tbody</span>&gt;</pre>
+                  <pre class="text-yellow-400">&lt;/<span class="text-blue-400">table</span>&gt;</pre>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="text-xs text-idatMuted border-t border-gray-100 pt-3 flex justify-between flex-shrink-0">
+            <span>Consejo SEO: Usar <code>&lt;caption&gt;</code> mejora la accesibilidad del lector de pantalla.</span>
+            <span>Estándar W3C</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================== -->
+      <!-- DIAPOSITIVA 4: Tablas - Ejemplo 1 (Horario) -->
+      <!-- ============================================== -->
+      <div id="slide-4" class="slide w-full bg-white rounded-3xl shadow-xl border border-gray-200 p-8 md:p-12 flex-col justify-between h-full">
+        <div class="flex flex-col h-full justify-between">
+          <div class="flex items-center justify-between mb-4 flex-shrink-0">
+            <div class="flex items-center gap-2">
+              <span class="bg-idatYellow text-idatDark font-bold px-2.5 py-0.5 rounded text-xs">EJEMPLO 1</span>
+              <h2 class="text-xl font-black text-idatDark uppercase tracking-tight">Horario Académico Semanal</h2>
+            </div>
+            <button onclick="toggleExample('example-table-1')" class="text-xs bg-idatDark text-white px-4 py-1.5 rounded-full font-bold hover:bg-idatYellow hover:text-idatDark transition-colors">
+              💻 Ver Código / Vista Previa
+            </button>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch flex-1 min-h-0 my-2">
+            <!-- Columna Izquierda: Explicación didáctica -->
+            <div class="text-sm flex flex-col justify-between">
+              <div>
+                <p class="text-idatMuted leading-relaxed mb-4 text-sm md:text-base">
+                  Este ejemplo demuestra el uso de una tabla semántica tradicional optimizada con Tailwind CSS para renderizar un horario académico de forma limpia.
+                </p>
+                <p class="text-idatMuted leading-relaxed mb-4 text-sm">
+                  Cada fila representa un bloque horario y las columnas contienen las asignaturas. El diseño asegura contraste y adaptabilidad.
+                </p>
+              </div>
+              <div class="bg-yellow-50 border-l-4 border-idatYellow p-4 rounded-r-xl text-xs md:text-sm mt-auto">
+                <strong>Análisis Semántico:</strong> Las cabeceras horizontales <code>&lt;th&gt;</code> definen los días de la semana, mientras que la primera columna de cada fila contiene las horas para dar contexto de lectura.
+              </div>
+            </div>
+
+            <!-- Columna Derecha: Contenedor interactivo (Usa el alto máximo disponible en la cuadrícula) -->
+            <div class="border border-gray-200 rounded-2xl overflow-hidden shadow-sm flex flex-col bg-white h-full min-h-[340px] md:h-auto">
+              <!-- Header del contenedor -->
+              <div class="bg-gray-100 px-4 py-2 flex justify-between items-center border-b border-gray-200">
+                <span id="label-table-1" class="text-xs font-bold text-idatDark">Vista Previa Interactiva</span>
+                <span class="w-3 h-3 rounded-full bg-green-500"></span>
+              </div>
+              
+              <!-- Contenido Dinámico Alternable -->
+              <div class="p-6 flex-1 overflow-auto custom-scrollbar flex items-center justify-center bg-gray-50/50">
+                <!-- VISTA PREVIA -->
+                <div id="preview-table-1" class="w-full">
+                  <table class="w-full text-left text-xs md:text-sm border-collapse bg-white shadow-sm rounded-lg overflow-hidden border border-gray-200">
+                    <thead>
+                      <tr class="bg-idatDark text-white">
+                        <th class="p-3 border border-gray-200 font-bold">Hora</th>
+                        <th class="p-3 border border-gray-200 font-bold">Lunes</th>
+                        <th class="p-3 border border-gray-200 font-bold">Miércoles</th>
+                        <th class="p-3 border border-gray-200 font-bold">Viernes</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr class="hover:bg-gray-50/80">
+                        <td class="p-3 font-bold bg-gray-50 border border-gray-200 text-center text-idatMuted">08:00 - 10:00</td>
+                        <td class="p-3 border border-gray-200 bg-yellow-50 text-idatDark font-semibold">Desarrollo Web</td>
+                        <td class="p-3 border border-gray-200">Autoestudio</td>
+                        <td class="p-3 border border-gray-200 bg-yellow-50 text-idatDark font-semibold">Desarrollo Web</td>
+                      </tr>
+                      <tr class="hover:bg-gray-50/80">
+                        <td class="p-3 font-bold bg-gray-50 border border-gray-200 text-center text-idatMuted">10:15 - 12:15</td>
+                        <td class="p-3 border border-gray-200">Matemáticas</td>
+                        <td class="p-3 border border-gray-200 bg-blue-50 text-blue-800 font-semibold">Bases de Datos</td>
+                        <td class="p-3 border border-gray-200">Matemáticas</td>
+                      </tr>
+                      <tr class="hover:bg-gray-50/80">
+                        <td class="p-3 font-bold bg-gray-50 border border-gray-200 text-center text-idatMuted">12:30 - 14:30</td>
+                        <td class="p-3 border border-gray-200 bg-green-50 text-green-800 font-semibold">Soporte Técnico</td>
+                        <td class="p-3 border border-gray-200">Investigación</td>
+                        <td class="p-3 border border-gray-200 bg-green-50 text-green-800 font-semibold">Soporte TI</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <!-- CÓDIGO HTML (Oculto al inicio) -->
+                <div id="code-table-1" class="hidden w-full h-full font-mono text-xs text-yellow-400 bg-idatDark p-4 rounded-xl overflow-auto custom-scrollbar">
+                  <pre>&lt;<span class="text-blue-400">table</span> <span class="text-green-400">class</span>="w-full border-collapse"&gt;
+  &lt;<span class="text-blue-400">thead</span> <span class="text-green-400">class</span>="bg-idatDark text-white"&gt;
+    &lt;<span class="text-blue-400">tr</span>&gt;
+      &lt;<span class="text-blue-400">th</span>&gt;Hora&lt;/<span class="text-blue-400">th</span>&gt;
+      &lt;<span class="text-blue-400">th</span>&gt;Lunes&lt;/<span class="text-blue-400">th</span>&gt;
+      &lt;<span class="text-blue-400">th</span>&gt;Miércoles&lt;/<span class="text-blue-400">th</span>&gt;
+      &lt;<span class="text-blue-400">th</span>&gt;Viernes&lt;/<span class="text-blue-400">th</span>&gt;
+    &lt;/<span class="text-blue-400">tr</span>&gt;
+  &lt;/<span class="text-blue-400">thead</span>&gt;
+  &lt;<span class="text-blue-400">tbody</span>&gt;
+    &lt;<span class="text-blue-400">tr</span>&gt;
+      &lt;<span class="text-blue-400">td</span> <span class="text-green-400">class</span>="font-bold border"&gt;08:00 - 10:00&lt;/<span class="text-blue-400">td</span>&gt;
+      &lt;<span class="text-blue-400">td</span> <span class="text-green-400">class</span>="bg-yellow-50 border"&gt;Desarrollo Web&lt;/<span class="text-blue-400">td</span>&gt;
+      &lt;<span class="text-blue-400">td</span>&gt;Autoestudio&lt;/<span class="text-blue-400">td</span>&gt;
+      &lt;<span class="text-blue-400">td</span> <span class="text-green-400">class</span>="bg-yellow-50 border"&gt;Desarrollo Web&lt;/<span class="text-blue-400">td</span>&gt;
+    &lt;/<span class="text-blue-400">tr</span>&gt;
+  &lt;/<span class="text-blue-400">tbody</span>&gt;
+&lt;/<span class="text-blue-400">table</span>&gt;</pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================== -->
+      <!-- DIAPOSITIVA 5: Tablas - Ejemplo 2 (Reporte con Colspan/Rowspan) -->
+      <!-- ============================================== -->
+      <div id="slide-5" class="slide w-full bg-white rounded-3xl shadow-xl border border-gray-200 p-8 md:p-12 flex-col justify-between h-full">
+        <div class="flex flex-col h-full justify-between">
+          <div class="flex items-center justify-between mb-4 flex-shrink-0">
+            <div class="flex items-center gap-2">
+              <span class="bg-idatYellow text-idatDark font-bold px-2.5 py-0.5 rounded text-xs">EJEMPLO 2</span>
+              <h2 class="text-xl font-black text-idatDark uppercase tracking-tight">Reporte Ventas Complejo (Fusión)</h2>
+            </div>
+            <button onclick="toggleExample('example-table-2')" class="text-xs bg-idatDark text-white px-4 py-1.5 rounded-full font-bold hover:bg-idatYellow hover:text-idatDark transition-colors">
+              💻 Ver Código / Vista Previa
+            </button>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch flex-1 min-h-0 my-2">
+            <!-- Columna Izquierda: Explicación didáctica -->
+            <div class="text-sm flex flex-col justify-between">
+              <div>
+                <p class="text-idatMuted leading-relaxed mb-4 text-sm md:text-base">
+                  El diseño de reportes corporativos complejos requiere un control perfecto sobre los atributos de agrupación o expansión de celdas:
+                </p>
+                <ul class="space-y-3 text-xs md:text-sm mb-4">
+                  <li class="bg-idatLight p-3 rounded-lg border-l-4 border-idatDark">
+                    <strong><code>colspan="N"</code>:</strong> Agrupa y expande <strong>columnas</strong> horizontalmente. En el ejemplo, consolida la cabecera del reporte.
+                  </li>
+                  <li class="bg-idatLight p-3 rounded-lg border-l-4 border-idatYellow">
+                    <strong><code>rowspan="N"</code>:</strong> Agrupa y expande <strong>filas</strong> de manera vertical. Excelente para consolidar marcas o categorías de datos repetitivas.
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Columna Derecha: Contenedor interactivo -->
+            <div class="border border-gray-200 rounded-2xl overflow-hidden shadow-sm flex flex-col bg-white h-full min-h-[340px] md:h-auto">
+              <div class="bg-gray-100 px-4 py-2 flex justify-between items-center border-b border-gray-200">
+                <span id="label-table-2" class="text-xs font-bold text-idatDark">Vista Previa Interactiva</span>
+                <span class="w-3 h-3 rounded-full bg-green-500"></span>
+              </div>
+              
+              <div class="p-6 flex-1 overflow-auto custom-scrollbar flex items-center justify-center bg-gray-50/50">
+                <!-- VISTA PREVIA -->
+                <div id="preview-table-2" class="w-full text-xs md:text-sm">
+                  <table class="w-full text-left border-collapse border border-gray-300 bg-white rounded-lg overflow-hidden shadow-sm">
+                    <thead>
+                      <tr class="bg-idatDark text-white text-center">
+                        <th colspan="3" class="p-3 border border-gray-300 font-bold uppercase tracking-wider text-xs">Reporte Consolidado de Inventario 2026</th>
+                      </tr>
+                      <tr class="bg-gray-200 text-idatDark font-bold text-xs">
+                        <th class="p-2 border border-gray-300">Categoría</th>
+                        <th class="p-2 border border-gray-300">Producto</th>
+                        <th class="p-2 border border-gray-300 text-right">Cantidad de Stock</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <!-- Fusión vertical de 2 filas para Cómputo -->
+                        <td rowspan="2" class="p-3 border border-gray-300 font-bold bg-yellow-50/50 text-idatDark text-center">Cómputo</td>
+                        <td class="p-3 border border-gray-300">Laptop Core i7 HP</td>
+                        <td class="p-3 border border-gray-300 text-right font-semibold">24 uds</td>
+                      </tr>
+                      <tr>
+                        <td class="p-3 border border-gray-300">PC Escritorio Lenovo</td>
+                        <td class="p-3 border border-gray-300 text-right font-semibold">15 uds</td>
+                      </tr>
+                      <tr>
+                        <!-- Fusión vertical de 2 filas para Redes -->
+                        <td rowspan="2" class="p-3 border border-gray-300 font-bold bg-blue-50/50 text-idatDark text-center">Redes</td>
+                        <td class="p-3 border border-gray-300">Router Cisco ISR</td>
+                        <td class="p-3 border border-gray-300 text-right font-semibold">8 uds</td>
+                      </tr>
+                      <tr>
+                        <td class="p-3 border border-gray-300">Switch Gigabit 24p</td>
+                        <td class="p-3 border border-gray-300 text-right font-semibold">12 uds</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <!-- CÓDIGO HTML -->
+                <div id="code-table-2" class="hidden w-full h-full font-mono text-xs text-yellow-400 bg-idatDark p-4 rounded-xl overflow-auto custom-scrollbar">
+                  <pre>&lt;<span class="text-blue-400">table</span> <span class="text-green-400">class</span>="border border-gray-300"&gt;
+  &lt;<span class="text-blue-400">thead</span>&gt;
+    &lt;<span class="text-blue-400">tr</span>&gt;
+      &lt;<span class="text-blue-400">th</span> <span class="text-green-400">colspan</span>="3"&gt;Consolidado de Inventario&lt;/<span class="text-blue-400">th</span>&gt;
+    &lt;/<span class="text-blue-400">tr</span>&gt;
+    &lt;<span class="text-blue-400">tr</span>&gt;
+      &lt;<span class="text-blue-400">th</span>&gt;Categoría&lt;/<span class="text-blue-400">th</span>&gt;
+      &lt;<span class="text-blue-400">th</span>&gt;Producto&lt;/<span class="text-blue-400">th</span>&gt;
+      &lt;<span class="text-blue-400">th</span>&gt;Cantidad&lt;/<span class="text-blue-400">th</span>&gt;
+    &lt;/<span class="text-blue-400">tr</span>&gt;
+  &lt;/<span class="text-blue-400">thead</span>&gt;
+  &lt;<span class="text-blue-400">tbody</span>&gt;
+    &lt;<span class="text-blue-400">tr</span>&gt;
+      &lt;<span class="text-blue-400">td</span> <span class="text-green-400">rowspan</span>="2"&gt;Cómputo&lt;/<span class="text-blue-400">td</span>&gt;
+      &lt;<span class="text-blue-400">td</span>&gt;Laptop Core i7&lt;/<span class="text-blue-400">td</span>&gt;
+      &lt;<span class="text-blue-400">td</span>&gt;24 uds&lt;/<span class="text-blue-400">td</span>&gt;
+    &lt;/<span class="text-blue-400">tr</span>&gt;
+    &lt;<span class="text-blue-400">tr</span>&gt;
+      &lt;<span class="text-blue-400">td</span>&gt;PC Escritorio&lt;/<span class="text-blue-400">td</span>&gt;
+      &lt;<span class="text-blue-400">td</span>&gt;15 uds&lt;/<span class="text-blue-400">td</span>&gt;
+    &lt;/<span class="text-blue-400">tr</span>&gt;
+  &lt;/<span class="text-blue-400">tbody</span>&gt;
+&lt;/<span class="text-blue-400">table</span>&gt;</pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================== -->
+      <!-- DIAPOSITIVA 6: Formularios - Fundamentos Teóricos -->
+      <!-- ============================================== -->
+      <div id="slide-6" class="slide w-full bg-white rounded-3xl shadow-xl border border-gray-200 p-8 md:p-12 flex-col justify-between h-full">
+        <div class="flex flex-col justify-between h-full">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <div class="flex items-center gap-2">
+                <span class="bg-idatYellow text-idatDark font-bold px-2.5 py-0.5 rounded text-xs">PARTE 2</span>
+                <h2 class="text-2xl font-black text-idatDark uppercase tracking-tight">Formularios y Capturas</h2>
+              </div>
+              <span class="text-xs text-idatMuted font-bold uppercase">Interactividad</span>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-stretch mt-4">
+              <div class="md:col-span-5 flex flex-col justify-center pr-2">
+                <p class="text-sm md:text-base text-gray-600 leading-relaxed mb-4">
+                  El elemento contenedor clave es <code>&lt;form&gt;</code>, responsable de coordinar el procesamiento o envío de datos mediante los atributos primordiales: <code>action</code> y <code>method</code>.
+                </p>
+                <ul class="space-y-3 text-xs md:text-sm text-idatDark font-medium">
+                  <li class="flex items-start gap-2">
+                    <span class="text-idatDark text-sm">✓</span>
+                    <span><code>&lt;label&gt;</code>: El rotulado descriptivo para mayor accesibilidad (usa <code>for</code>).</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-idatDark text-sm">✓</span>
+                    <span><code>&lt;input&gt;</code>: El control interactivo determinado por el atributo <code>type</code>.</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-idatDark text-sm">✓</span>
+                    <span>Atributo <code>name</code>: Envía un identificador clave-valor hacia el back-end.</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-idatDark text-sm">✓</span>
+                    <span>Atributo <code>required</code>: Realiza validaciones del lado del cliente.</span>
+                  </li>
+                </ul>
+              </div>
+              <div class="md:col-span-7 bg-idatDark text-gray-100 rounded-2xl p-6 font-mono text-xs md:text-sm overflow-auto custom-scrollbar shadow-inner relative flex flex-col justify-center min-h-[220px]">
+                <div class="absolute right-3 top-3 text-[10px] text-gray-400 bg-gray-800 px-2 py-0.5 rounded font-sans uppercase">Sintaxis Básica</div>
+                <div class="space-y-1">
+                  <pre class="text-yellow-400">&lt;<span class="text-blue-400">form</span> <span class="text-green-400">action</span>="<span class="text-white">/guardar.php</span>" <span class="text-green-400">method</span>="<span class="text-white">POST</span>"&gt;</pre>
+                  <pre class="text-yellow-400">  &lt;<span class="text-blue-400">label</span> <span class="text-green-400">for</span>="txtNombre"&gt;Nombres:&lt;/<span class="text-blue-400">label</span>&gt;</pre>
+                  <pre class="text-yellow-400">  &lt;<span class="text-blue-400">input</span> </pre>
+                  <pre class="text-yellow-400">    <span class="text-green-400">type</span>="<span class="text-white">text</span>" </pre>
+                  <pre class="text-yellow-400">    <span class="text-green-400">id</span>="<span class="text-white">txtNombre</span>" </pre>
+                  <pre class="text-yellow-400">    <span class="text-green-400">name</span>="<span class="text-white">usuario</span>" </pre>
+                  <pre class="text-yellow-400">    <span class="text-green-400">required</span>&gt;</pre>
+                  <pre class="text-yellow-400">  &lt;<span class="text-blue-400">button</span> <span class="text-green-400">type</span>="<span class="text-white">submit</span>"&gt;Enviar&lt;/<span class="text-blue-400">button</span>&gt;</pre>
+                  <pre class="text-yellow-400">&lt;/<span class="text-blue-400">form</span>&gt;</pre>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="text-xs text-idatMuted border-t border-gray-100 pt-3 flex justify-between flex-shrink-0">
+            <span>Consejo de Usabilidad: Vincular etiquetas con inputs agiliza las pulsaciones en pantallas de dispositivos móviles.</span>
+            <span>UX Web</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================== -->
+      <!-- DIAPOSITIVA 7: Formularios - Ejemplo 1 (Registro) -->
+      <!-- ============================================== -->
+      <div id="slide-7" class="slide w-full bg-white rounded-3xl shadow-xl border border-gray-200 p-8 md:p-12 flex-col justify-between h-full">
+        <div class="flex flex-col h-full justify-between">
+          <div class="flex items-center justify-between mb-4 flex-shrink-0">
+            <div class="flex items-center gap-2">
+              <span class="bg-idatYellow text-idatDark font-bold px-2.5 py-0.5 rounded text-xs">EJEMPLO 3</span>
+              <h2 class="text-xl font-black text-idatDark uppercase tracking-tight">Formulario de Registro Básico</h2>
+            </div>
+            <button onclick="toggleExample('example-form-1')" class="text-xs bg-idatDark text-white px-4 py-1.5 rounded-full font-bold hover:bg-idatYellow hover:text-idatDark transition-colors">
+              💻 Ver Código / Vista Previa
+            </button>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch flex-1 min-h-0 my-2">
+            <!-- Columna Izquierda: Explicación didáctica -->
+            <div class="text-sm flex flex-col justify-between">
+              <div>
+                <p class="text-idatMuted leading-relaxed mb-4 text-sm md:text-base">
+                  Un formulario clásico de registro de usuarios utiliza componentes de captura estandarizados que facilitan una recolección rápida de datos.
+                </p>
+                <div class="space-y-2">
+                  <div class="flex gap-2.5 items-center text-xs md:text-sm">
+                    <span class="bg-idatYellow text-idatDark font-black px-2.5 py-1 rounded text-xs w-20 text-center">text</span>
+                    <span>Ideal para textos estándar de una línea (nombres, apellidos).</span>
+                  </div>
+                  <div class="flex gap-2.5 items-center text-xs md:text-sm">
+                    <span class="bg-idatYellow text-idatDark font-black px-2.5 py-1 rounded text-xs w-20 text-center">email</span>
+                    <span>Valida de forma nativa la sintaxis básica (@dominio).</span>
+                  </div>
+                  <div class="flex gap-2.5 items-center text-xs md:text-sm">
+                    <span class="bg-idatYellow text-idatDark font-black px-2.5 py-1 rounded text-xs w-20 text-center">password</span>
+                    <span>Enmascara los caracteres ingresados para resguardar la privacidad.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Columna Derecha: Contenedor interactivo -->
+            <div class="border border-gray-200 rounded-2xl overflow-hidden shadow-sm flex flex-col bg-white h-full min-h-[340px] md:h-auto">
+              <div class="bg-gray-100 px-4 py-2 flex justify-between items-center border-b border-gray-200">
+                <span id="label-form-1" class="text-xs font-bold text-idatDark">Vista Previa Interactiva</span>
+                <span class="w-3 h-3 rounded-full bg-green-500"></span>
+              </div>
+              
+              <div class="p-6 flex-1 overflow-auto custom-scrollbar flex items-center justify-center bg-gray-50/50">
+                <!-- VISTA PREVIA -->
+                <div id="preview-form-1" class="w-full max-w-sm bg-white p-5 rounded-xl border border-gray-100 shadow-sm">
+                  <form onsubmit="event.preventDefault(); showSuccessToast('Registro simulado correctamente.');" class="space-y-4 text-xs md:text-sm">
+                    <div>
+                      <label class="block font-bold text-idatDark mb-1" for="form1-name">Nombres Completos:</label>
+                      <input id="form1-name" type="text" placeholder="Ej. Juan Pérez" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-idatYellow focus:outline-none transition-all">
+                    </div>
+                    <div>
+                      <label class="block font-bold text-idatDark mb-1" for="form1-email">Correo Institucional:</label>
+                      <input id="form1-email" type="email" placeholder="alumno@idat.edu.pe" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-idatYellow focus:outline-none transition-all">
+                    </div>
+                    <button type="submit" class="w-full bg-idatYellow text-idatDark font-bold py-2 px-4 rounded-lg hover:bg-idatDark hover:text-idatYellow transition-all duration-200 shadow-sm text-sm">
+                      Registrarme Gratis
+                    </button>
+                  </form>
+                </div>
+
+                <!-- CÓDIGO HTML -->
+                <div id="code-form-1" class="hidden w-full h-full font-mono text-xs text-yellow-400 bg-idatDark p-4 rounded-xl overflow-auto custom-scrollbar">
+                  <pre>&lt;<span class="text-blue-400">form</span> <span class="text-green-400">class</span>="space-y-3"&gt;
+  &lt;<span class="text-blue-400">div</span>&gt;
+    &lt;<span class="text-blue-400">label</span> <span class="text-green-400">for</span>="name"&gt;Nombres:&lt;/<span class="text-blue-400">label</span>&gt;
+    &lt;<span class="text-blue-400">input</span> <span class="text-green-400">type</span>="text" <span class="text-green-400">id</span>="name" <span class="text-green-400">required</span>&gt;
+  &lt;/<span class="text-blue-400">div</span>&gt;
+  &lt;<span class="text-blue-400">div</span>&gt;
+    &lt;<span class="text-blue-400">label</span> <span class="text-green-400">for</span>="email"&gt;Correo:&lt;/<span class="text-blue-400">label</span>&gt;
+    &lt;<span class="text-blue-400">input</span> <span class="text-green-400">type</span>="email" <span class="text-green-400">id</span>="email" <span class="text-green-400">required</span>&gt;
+  &lt;/<span class="text-blue-400">div</span>&gt;
+  &lt;<span class="text-blue-400">button</span> <span class="text-green-400">type</span>="submit"&gt;Registrar&lt;/<span class="text-blue-400">button</span>&gt;
+&lt;/<span class="text-blue-400">form</span>&gt;</pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================== -->
+      <!-- DIAPOSITIVA 8: Formularios - Ejemplo 2 (Feedback / Select) -->
+      <!-- ============================================== -->
+      <div id="slide-8" class="slide w-full bg-white rounded-3xl shadow-xl border border-gray-200 p-8 md:p-12 flex-col justify-between h-full">
+        <div class="flex flex-col h-full justify-between">
+          <div class="flex items-center justify-between mb-4 flex-shrink-0">
+            <div class="flex items-center gap-2">
+              <span class="bg-idatYellow text-idatDark font-bold px-2.5 py-0.5 rounded text-xs">EJEMPLO 4</span>
+              <h2 class="text-xl font-black text-idatDark uppercase tracking-tight">Formulario de Valoración y Feedback</h2>
+            </div>
+            <button onclick="toggleExample('example-form-2')" class="text-xs bg-idatDark text-white px-4 py-1.5 rounded-full font-bold hover:bg-idatYellow hover:text-idatDark transition-colors">
+              💻 Ver Código / Vista Previa
+            </button>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch flex-1 min-h-0 my-2">
+            <!-- Columna Izquierda: Explicación didáctica -->
+            <div class="text-sm flex flex-col justify-between">
+              <div>
+                <p class="text-idatMuted leading-relaxed mb-4 text-sm md:text-base">
+                  Los formularios robustos van más allá de cajas de texto simples. La inclusión de listas de selección estructuradas y bloques multilínea agilizan la recolección de opiniones.
+                </p>
+                <div class="space-y-3">
+                  <div class="bg-yellow-50 p-3 rounded-lg text-xs md:text-sm">
+                    <strong><code>&lt;select&gt;</code> + <code>&lt;option&gt;</code>:</strong> Ofrece menús desplegables cerrados, evitando errores de tipeo y estructurando los datos enviados al servidor.
+                  </div>
+                  <div class="bg-gray-50 p-3 rounded-lg text-xs md:text-sm">
+                    <strong><code>&lt;textarea&gt;</code>:</strong> Caja multilínea pensada para recolectar opiniones detalladas, reclamos o sugerencias del alumnado.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Columna Derecha: Contenedor interactivo -->
+            <div class="border border-gray-200 rounded-2xl overflow-hidden shadow-sm flex flex-col bg-white h-full min-h-[340px] md:h-auto">
+              <div class="bg-gray-100 px-4 py-2 flex justify-between items-center border-b border-gray-200">
+                <span id="label-form-2" class="text-xs font-bold text-idatDark">Vista Previa Interactiva</span>
+                <span class="w-3 h-3 rounded-full bg-green-500"></span>
+              </div>
+              
+              <div class="p-6 flex-1 overflow-auto custom-scrollbar flex items-center justify-center bg-gray-50/50">
+                <!-- VISTA PREVIA -->
+                <div id="preview-form-2" class="w-full max-w-sm bg-white p-5 rounded-xl border border-gray-100 shadow-sm">
+                  <form onsubmit="event.preventDefault(); showSuccessToast('¡Gracias por tus valiosos comentarios!');" class="space-y-4 text-xs md:text-sm">
+                    <div>
+                      <label class="block font-bold text-idatDark mb-1" for="satisfaccion">Curso del Ciclo:</label>
+                      <select id="satisfaccion" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-idatYellow focus:outline-none bg-white transition-all">
+                        <option value="html">Desarrollo Web (HTML5/CSS3)</option>
+                        <option value="bd">Bases de Datos I</option>
+                        <option value="metodo">Metodologías de Desarrollo</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label class="block font-bold text-idatDark mb-1" for="comentario">Comentarios o Sugerencias:</label>
+                      <textarea id="comentario" rows="3" placeholder="Escribe tu opinión sobre el docente o el laboratorio..." required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-idatYellow focus:outline-none transition-all resize-none"></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-idatDark text-idatYellow font-bold py-2 px-4 rounded-lg hover:bg-idatYellow hover:text-idatDark transition-all duration-200 text-sm shadow-sm">
+                      Enviar Valoración
+                    </button>
+                  </form>
+                </div>
+
+                <!-- CÓDIGO HTML -->
+                <div id="code-form-2" class="hidden w-full h-full font-mono text-xs text-yellow-400 bg-idatDark p-4 rounded-xl overflow-auto custom-scrollbar">
+                  <pre>&lt;<span class="text-blue-400">form</span>&gt;
+  &lt;<span class="text-blue-400">label</span> <span class="text-green-400">for</span>="curso"&gt;Curso:&lt;/<span class="text-blue-400">label</span>&gt;
+  &lt;<span class="text-blue-400">select</span> <span class="text-green-400">id</span>="curso"&gt;
+    &lt;<span class="text-blue-400">option</span>&gt;Desarrollo Web&lt;/<span class="text-blue-400">option</span>&gt;
+    &lt;<span class="text-blue-400">option</span>&gt;Bases de Datos&lt;/<span class="text-blue-400">option</span>&gt;
+  &lt;/<span class="text-blue-400">select</span>&gt;
+
+  &lt;<span class="text-blue-400">label</span> <span class="text-green-400">for</span>="coment"&gt;Comentarios:&lt;/<span class="text-blue-400">label</span>&gt;
+  &lt;<span class="text-blue-400">textarea</span> <span class="text-green-400">id</span>="coment"&gt;&lt;/<span class="text-blue-400">textarea</span>&gt;
+  
+  &lt;<span class="text-blue-400">button</span>&gt;Enviar&lt;/<span class="text-blue-400">button</span>&gt;
+&lt;/<span class="text-blue-400">form</span>&gt;</pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================== -->
+      <!-- DIAPOSITIVA 9: Cierre de Sesión / Agradecimiento -->
+      <!-- ============================================== -->
+      <div id="slide-9" class="slide w-full bg-idatDark rounded-3xl shadow-xl border border-gray-900 p-8 md:p-12 flex-col justify-between h-full text-white">
+        <div class="flex flex-col items-center justify-center text-center my-auto">
+          <div class="bg-idatYellow text-idatDark font-black px-6 py-2 rounded-full text-xs md:text-sm tracking-widest uppercase mb-6 animate-bounce">
+            ¡LOGRO CUMPLIDO!
+          </div>
+          <h2 class="text-4xl md:text-5xl font-black tracking-tight text-white leading-tight">
+            Muchas Gracias por <br class="hidden md:block">su Atención
+          </h2>
+          <p class="text-gray-400 mt-4 max-w-xl text-sm md:text-base leading-relaxed">
+            La práctica constante construye grandes desarrolladores. ¡Te esperamos en los laboratorios de codificación en GitHub Classroom!
+          </p>
+          
+          <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-2xl">
+            <div class="bg-gray-800/80 p-5 rounded-2xl border border-gray-700 text-left">
+              <span class="text-idatYellow text-xs font-bold uppercase block tracking-wider mb-1.5">DUDAS Y CONSULTAS</span>
+              <p class="text-xs md:text-sm text-gray-300">Resuelve cualquier pregunta técnica de la sesión mediante los canales del aula virtual o vía correo.</p>
+            </div>
+            <div class="bg-gray-800/80 p-5 rounded-2xl border border-gray-700 text-left">
+              <span class="text-idatYellow text-xs font-bold uppercase block tracking-wider mb-1.5">RETO PRÁCTICO</span>
+              <p class="text-xs md:text-sm text-gray-300">Maquetar tu primer formulario de inicio de sesión con validaciones nativas y publicarlo en GitHub Pages.</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="mt-6 pt-4 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500 w-full gap-2 flex-shrink-0">
+          <span>Ing. Jhon Chavez • <span class="text-idatYellow">Desarrollo Web</span></span>
+          <span>© 2026 IDAT. Todos los derechos reservados.</span>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer de Navegación e Indicadores (Altura Fija) -->
+  <footer class="bg-white border-t border-gray-200 px-6 md:px-12 py-3 flex flex-col md:flex-row items-center justify-between gap-4 h-auto md:h-[72px] flex-shrink-0 z-50">
+    <!-- Paginación Izquierda -->
+    <div class="flex items-center gap-3">
+      <span class="text-xs text-idatMuted font-bold tracking-wider uppercase">Progreso actual:</span>
+      <div class="flex items-center gap-1.5 bg-idatLight border border-gray-200 rounded-full px-3 py-1 text-xs font-black text-idatDark">
+        <span id="current-slide-num">1</span> / <span id="total-slides-num">9</span>
+      </div>
+    </div>
+
+    <!-- Controles Centrales de Navegación -->
+    <div class="flex items-center gap-2">
+      <button id="btn-prev" onclick="changeSlide(-1)" class="bg-idatDark hover:bg-idatYellow hover:text-idatDark text-white p-2.5 rounded-full transition-all duration-200 shadow disabled:opacity-30 disabled:pointer-events-none" title="Diapositiva Anterior">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>
+      </button>
+      
+      <!-- Indicadores circulares individuales -->
+      <div class="flex items-center gap-1.5 px-2" id="dots-container"></div>
+
+      <button id="btn-next" onclick="changeSlide(1)" class="bg-idatDark hover:bg-idatYellow hover:text-idatDark text-white p-2.5 rounded-full transition-all duration-200 shadow disabled:opacity-30 disabled:pointer-events-none" title="Siguiente Diapositiva">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+
+    <!-- Indicador Técnico Derecha (Atajos) -->
+    <div class="hidden lg:flex items-center gap-2 text-xs text-idatMuted">
+      <span class="font-bold">Atajos del teclado:</span>
+      <kbd class="px-2 py-0.5 bg-gray-100 border border-gray-300 rounded text-idatDark font-mono font-bold shadow-sm">←</kbd>
+      <kbd class="px-2 py-0.5 bg-gray-100 border border-gray-300 rounded text-idatDark font-mono font-bold shadow-sm">→</kbd>
+    </div>
+  </footer>
+
+  <!-- Notification Toast Container -->
+  <div id="toast" class="fixed bottom-24 right-6 bg-idatDark text-idatYellow px-4 py-3 rounded-xl shadow-lg transform translate-y-20 opacity-0 transition-all duration-300 flex items-center gap-2 text-xs font-bold border border-idatYellow/20 z-50">
+    <span class="text-base">🚀</span> <span id="toast-message">Datos procesados correctamente</span>
+  </div>
+
+  <script>
+    // Variables de Estado de la Diapositiva Activa
+    let currentSlide = 1;
+    const totalSlides = 9;
+
+    // Inicializar los indicadores (puntos) del Footer
+    function initDots() {
+      const container = document.getElementById('dots-container');
+      container.innerHTML = '';
+      for (let i = 1; i <= totalSlides; i++) {
+        const dot = document.createElement('button');
+        dot.className = `w-2.5 h-2.5 rounded-full transition-all duration-300 ${i === 1 ? 'bg-idatYellow ring-2 ring-idatDark w-4' : 'bg-gray-300 hover:bg-gray-400'}`;
+        dot.title = `Ir a Diapositiva ${i}`;
+        dot.onclick = () => jumpToSlide(i);
+        container.appendChild(dot);
+      }
+    }
+
+    // Saltar directamente a una diapositiva
+    function jumpToSlide(num) {
+      if (num < 1 || num > totalSlides) return;
+      
+      // Desactivar diapositiva vieja
+      document.getElementById(`slide-${currentSlide}`).classList.remove('active');
+      document.getElementById(`slide-${currentSlide}`).classList.add('hidden');
+      
+      // Activar nueva diapositiva
+      currentSlide = num;
+      document.getElementById(`slide-${currentSlide}`).classList.remove('hidden');
+      document.getElementById(`slide-${currentSlide}`).classList.add('active');
+      
+      // Actualizar interfaz del paginador
+      updateUI();
+    }
+
+    // Avanzar o Retroceder diapositivas
+    function changeSlide(direction) {
+      const target = currentSlide + direction;
+      jumpToSlide(target);
+    }
+
+    // Actualizar UI General del Paginador y Botones
+    function updateUI() {
+      // Contador numérico
+      document.getElementById('current-slide-num').innerText = currentSlide;
+      document.getElementById('total-slides-num').innerText = totalSlides;
+
+      // Estado de botones Prev/Next
+      document.getElementById('btn-prev').disabled = currentSlide === 1;
+      document.getElementById('btn-next').disabled = currentSlide === totalSlides;
+
+      // Actualizar clase de los indicadores de puntos
+      const dots = document.getElementById('dots-container').children;
+      for (let i = 0; i < dots.length; i++) {
+        const index = i + 1;
+        if (index === currentSlide) {
+          dots[i].className = 'w-4 h-2.5 rounded-full transition-all duration-300 bg-idatYellow ring-2 ring-idatDark';
+        } else {
+          dots[i].className = 'w-2.5 h-2.5 rounded-full transition-all duration-300 bg-gray-300 hover:bg-gray-400';
+        }
+      }
+    }
+
+    // Soporte de Teclado
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'Space') {
+        changeSlide(1);
+      } else if (e.key === 'ArrowLeft') {
+        changeSlide(-1);
+      }
+    });
+
+    // Cambiar la vista de los ejemplos interactivos (Código vs Vista Previa)
+    function toggleExample(id) {
+      let previewEl, codeEl, labelEl;
+      
+      if (id === 'example-table-1') {
+        previewEl = document.getElementById('preview-table-1');
+        codeEl = document.getElementById('code-table-1');
+        labelEl = document.getElementById('label-table-1');
+      } else if (id === 'example-table-2') {
+        previewEl = document.getElementById('preview-table-2');
+        codeEl = document.getElementById('code-table-2');
+        labelEl = document.getElementById('label-table-2');
+      } else if (id === 'example-form-1') {
+        previewEl = document.getElementById('preview-form-1');
+        codeEl = document.getElementById('code-form-1');
+        labelEl = document.getElementById('label-form-1');
+      } else if (id === 'example-form-2') {
+        previewEl = document.getElementById('preview-form-2');
+        codeEl = document.getElementById('code-form-2');
+        labelEl = document.getElementById('label-form-2');
+      }
+
+      if (previewEl.classList.contains('hidden')) {
+        previewEl.classList.remove('hidden');
+        codeEl.classList.add('hidden');
+        labelEl.innerText = "Vista Previa Interactiva";
+      } else {
+        previewEl.classList.add('hidden');
+        codeEl.classList.remove('hidden');
+        labelEl.innerText = "Código HTML Semántico";
+      }
+    }
+
+    // Mostrar feedback emergente al enviar formularios de ejemplo
+    function showSuccessToast(message) {
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toast-message');
+      toastMsg.innerText = message;
+      
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+      
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 3000);
+    }
+
+    // Inicializar en la carga del DOM
+    window.onload = function() {
+      initDots();
+      updateUI();
+    };
+  </script>
+</body>
+</html>
